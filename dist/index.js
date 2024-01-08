@@ -399,8 +399,6 @@ class TestReporter {
             const { listSuites, listTests, onlySummary } = this;
             const baseUrl = createResp.data.html_url;
             const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
-            core.info('printing results');
-            core.info(JSON.stringify(results));
             core.info('Creating annotations');
             const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
             const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
@@ -1484,8 +1482,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.PerlJunitParser = void 0;
+/*
+  NOTICE: this dir is copied from parsers/java-junit, No any other changes except class name
+  We should copy test file too when we develop perl parser based on it.
+*/
 const path = __importStar(__nccwpck_require__(1017));
 const xml2js_1 = __nccwpck_require__(6189);
+const core_1 = __nccwpck_require__(2186);
 const java_stack_trace_element_parser_1 = __nccwpck_require__(5424);
 const path_utils_1 = __nccwpck_require__(4070);
 const test_results_1 = __nccwpck_require__(2768);
@@ -1613,6 +1616,7 @@ class PerlJunitParser {
         };
     }
     exceptionThrowSource(stackTrace) {
+        (0, core_1.info)(`Parsing stack trace:\n${stackTrace}`);
         const lines = stackTrace.split(/\r?\n/);
         for (const str of lines) {
             const stackTraceElement = (0, java_stack_trace_element_parser_1.parseStackTraceElement)(str);

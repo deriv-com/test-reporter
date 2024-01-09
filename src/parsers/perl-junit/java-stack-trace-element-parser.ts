@@ -12,7 +12,7 @@ const re = /^#\s*at (.*) line (\d+)\.$/
 export function parseStackTraceElement(stackTraceLine: string): StackTraceElement | undefined {
   const match = stackTraceLine.match(re)
   if (match !== null) {
-    const [filePath, lineStr] = match
+    const [_, filePath, lineStr] = match
     return {
       filePath,
       lineStr

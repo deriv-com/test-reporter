@@ -1415,7 +1415,7 @@ const re = /^#\s*at (.*) line (\d+)\.$/;
 function parseStackTraceElement(stackTraceLine) {
     const match = stackTraceLine.match(re);
     if (match !== null) {
-        const [filePath, lineStr] = match;
+        const [_, filePath, lineStr] = match;
         return {
             filePath,
             lineStr

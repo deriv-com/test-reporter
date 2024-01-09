@@ -1616,7 +1616,10 @@ class PerlJunitParser {
         (0, core_1.info)(`Parsing stack trace:\n${stackTrace}`);
         const lines = stackTrace.split(/\r?\n/);
         for (const str of lines) {
+            (0, core_1.info)(`parsing line: ${str}`);
             const stackTraceElement = (0, java_stack_trace_element_parser_1.parseStackTraceElement)(str);
+            const tmpstr = JSON.stringify(stackTraceElement);
+            (0, core_1.info)(`parse result:  ${tmpstr}`);
             if (stackTraceElement) {
                 const { filePath, lineStr } = stackTraceElement;
                 if (filePath !== undefined) {

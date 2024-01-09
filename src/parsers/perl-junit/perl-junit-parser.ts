@@ -154,7 +154,10 @@ export class PerlJunitParser implements TestParser {
     const lines = stackTrace.split(/\r?\n/)
 
     for (const str of lines) {
+      info(`parsing line: ${str}`)
       const stackTraceElement = parseStackTraceElement(str)
+      const tmpstr = JSON.stringify(stackTraceElement)
+      info(`parse result:  ${tmpstr}`)
       if (stackTraceElement) {
         const {filePath, lineStr} = stackTraceElement
         if (filePath !== undefined) {

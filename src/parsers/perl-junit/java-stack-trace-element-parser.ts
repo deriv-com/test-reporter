@@ -1,26 +1,20 @@
 export interface StackTraceElement {
-  classLoader: string | undefined
-  moduleNameAndVersion: string | undefined
-  tracePath: string
-  fileName: string
+  filePath: string
   lineStr: string
 }
 
 // classloader and module name are optional:
 // at <CLASSLOADER>/<MODULE_NAME_AND_VERSION>/<FULLY_QUALIFIED_METHOD_NAME>(<FILE_NAME>:<LINE_NUMBER>)
 // https://github.com/eclipse-openj9/openj9/issues/11452#issuecomment-754946992
-const re = /^\s*at (\S+\/\S*\/)?(.*)\((.*):(\d+)\)$/
+// perl: #   at t/test1.t line 23.
+const re = /^#\s*at (.*) line (\d+)\.$/
 
 export function parseStackTraceElement(stackTraceLine: string): StackTraceElement | undefined {
   const match = stackTraceLine.match(re)
   if (match !== null) {
-    const [_, maybeClassLoaderAndModuleNameAndVersion, tracePath, fileName, lineStr] = match
-    const {classLoader, moduleNameAndVersion} = parseClassLoaderAndModule(maybeClassLoaderAndModuleNameAndVersion)
+    const [filePath, lineStr] = match
     return {
-      classLoader,
-      moduleNameAndVersion,
-      tracePath,
-      fileName,
+      filePath,
       lineStr
     }
   }

@@ -156,8 +156,7 @@ export class PerlJunitParser implements TestParser {
     for (const str of lines) {
       const stackTraceElement = parseStackTraceElement(str)
       if (stackTraceElement) {
-        const {tracePath, fileName, lineStr} = stackTraceElement
-        const filePath = this.getFilePath(tracePath, fileName)
+        const {filePath, lineStr} = stackTraceElement
         if (filePath !== undefined) {
           const line = parseInt(lineStr)
           return {filePath, line}

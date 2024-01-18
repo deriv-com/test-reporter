@@ -5,7 +5,7 @@
 import * as path from 'path'
 import {ParseOptions, TestParser} from '../../test-parser'
 import {parseStringPromise} from 'xml2js'
-import {info} from '@actions/core';
+
 import {JunitReport, SingleSuiteReport, TestCase, TestSuite} from './java-junit-types'
 import {parseStackTraceElement} from './java-stack-trace-element-parser'
 import {normalizeFilePath} from '../../utils/path-utils'
@@ -150,14 +150,10 @@ export class PerlJunitParser implements TestParser {
   }
 
   private exceptionThrowSource(stackTrace: string): {filePath: string; line: number} | undefined {
-    info(`Parsing stack trace:\n${stackTrace}`)
     const lines = stackTrace.split(/\r?\n/)
 
     for (const str of lines) {
-      info(`parsing line: ${str}`)
       const stackTraceElement = parseStackTraceElement(str)
-      const tmpstr = JSON.stringify(stackTraceElement)
-      info(`parse result:  ${tmpstr}`)
       if (stackTraceElement) {
         const {filePath, lineStr} = stackTraceElement
         if (filePath !== undefined) {

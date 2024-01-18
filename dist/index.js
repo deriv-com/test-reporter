@@ -1401,18 +1401,16 @@ exports.MochaJsonParser = MochaJsonParser;
 /***/ }),
 
 /***/ 5424:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseStackTraceElement = void 0;
-const core_1 = __nccwpck_require__(2186);
 // perl: #   at t/test1.t line 23.
 const re = /\s+at (.*) line (\d+)\.$/;
 function parseStackTraceElement(stackTraceLine) {
     const match = stackTraceLine.match(re);
-    (0, core_1.info)(`match ${stackTraceLine}: ${match}`);
     if (match !== null) {
         const [_, filePath, lineStr] = match;
         return {
@@ -1472,7 +1470,6 @@ exports.PerlJunitParser = void 0;
 */
 const path = __importStar(__nccwpck_require__(1017));
 const xml2js_1 = __nccwpck_require__(6189);
-const core_1 = __nccwpck_require__(2186);
 const java_stack_trace_element_parser_1 = __nccwpck_require__(5424);
 const path_utils_1 = __nccwpck_require__(4070);
 const test_results_1 = __nccwpck_require__(2768);
@@ -1600,13 +1597,9 @@ class PerlJunitParser {
         };
     }
     exceptionThrowSource(stackTrace) {
-        (0, core_1.info)(`Parsing stack trace:\n${stackTrace}`);
         const lines = stackTrace.split(/\r?\n/);
         for (const str of lines) {
-            (0, core_1.info)(`parsing line: ${str}`);
             const stackTraceElement = (0, java_stack_trace_element_parser_1.parseStackTraceElement)(str);
-            const tmpstr = JSON.stringify(stackTraceElement);
-            (0, core_1.info)(`parse result:  ${tmpstr}`);
             if (stackTraceElement) {
                 const { filePath, lineStr } = stackTraceElement;
                 if (filePath !== undefined) {

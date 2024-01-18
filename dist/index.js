@@ -1401,19 +1401,18 @@ exports.MochaJsonParser = MochaJsonParser;
 /***/ }),
 
 /***/ 5424:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseStackTraceElement = void 0;
-// classloader and module name are optional:
-// at <CLASSLOADER>/<MODULE_NAME_AND_VERSION>/<FULLY_QUALIFIED_METHOD_NAME>(<FILE_NAME>:<LINE_NUMBER>)
-// https://github.com/eclipse-openj9/openj9/issues/11452#issuecomment-754946992
+const core_1 = __nccwpck_require__(2186);
 // perl: #   at t/test1.t line 23.
-const re = /^#\s*at (.*) line (\d+)\.$/;
+const re = /\s+at (.*) line (\d+)\.$/;
 function parseStackTraceElement(stackTraceLine) {
     const match = stackTraceLine.match(re);
+    (0, core_1.info)(`match ${stackTraceLine}: ${match}`);
     if (match !== null) {
         const [_, filePath, lineStr] = match;
         return {
@@ -1424,18 +1423,6 @@ function parseStackTraceElement(stackTraceLine) {
     return undefined;
 }
 exports.parseStackTraceElement = parseStackTraceElement;
-function parseClassLoaderAndModule(maybeClassLoaderAndModuleNameAndVersion) {
-    if (maybeClassLoaderAndModuleNameAndVersion) {
-        const res = maybeClassLoaderAndModuleNameAndVersion.split('/');
-        const classLoader = res[0];
-        let moduleNameAndVersion = res[1];
-        if (moduleNameAndVersion === '') {
-            moduleNameAndVersion = undefined;
-        }
-        return { classLoader, moduleNameAndVersion };
-    }
-    return { classLoader: undefined, moduleNameAndVersion: undefined };
-}
 
 
 /***/ }),

@@ -1,5 +1,5 @@
 {
-  "name": "mocha-fixture",
+  "name": "@deriv-com/mocha-fixture",
   "version": "0.0.0",
   "private": true,
   "description": "Generates test fixtures for test-reporter action",

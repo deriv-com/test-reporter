@@ -1,5 +1,5 @@
 {
-  "name": "test-check",
+  "name": "@deriv-com/test-check",
   "version": "1.7.0",
   "private": true,
   "description": "Presents test results from popular testing frameworks as Github check run",
